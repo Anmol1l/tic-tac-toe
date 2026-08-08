@@ -1,8 +1,8 @@
 const gameboard = (() => {
 
     const board = [
-        [1, 0, 0],
-        [0, 1, 0],
+        [0, 0, 0],
+        [0, 0, 0],
         [0, 0, 0],
     ];
 
@@ -23,6 +23,7 @@ const gameboard = (() => {
 
 })();
 
+let turns = 0
 function createPlayer(name, mark) {
     const { getBoard, setMarkInherit, getLastMark } = gameboard;
 
@@ -34,10 +35,12 @@ function createPlayer(name, mark) {
 
     const setMark = (x, y) => {
 
-        if (!getBoard()[x][y] && getLastMark() != mark){
+        if (!getBoard()[x][y] && getLastMark() != mark && turns < 10){
             setMarkInherit()(mark, x, y);
             checkWin(mark);
             console.log(getBoard())
+            turns++;
+            console.log(turns)
         }
         else if(getBoard()[x][y] != 0) {
             console.log("Occupied")
@@ -45,6 +48,9 @@ function createPlayer(name, mark) {
         else if(getLastMark() == mark) {
             console.log("Not Your Turn")
         }
+        else if (turns >=9) {
+            console.log("Draw refresh")
+        } 
     };
 
     return { name, mark, getStatus, changeStatus, getBoard, setMark };
