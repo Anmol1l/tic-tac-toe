@@ -1,15 +1,15 @@
 const gameboard = ( () => {
     
-    const gameboard =  [
+    const board =  [
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0],
     ];
 
-    const getGameboard = () => gameboard;
+    const getGameboard = () => board;
     
     const setMarkPrivate = (playerMark,x,y) => {
-        gameboard[x][y] = playerMark;
+        board[x][y] = playerMark;
     };
 
     const setMarkInherit = () => setMarkPrivate;
