@@ -6,7 +6,7 @@ const gameboard = ( () => {
         [0, 0, 0],
     ];
 
-    const getGameboard = () => board;
+    const getBoard = () => board;
     
     const setMarkPrivate = (playerMark,x,y) => {
         board[x][y] = playerMark;
@@ -14,12 +14,12 @@ const gameboard = ( () => {
 
     const setMarkInherit = () => setMarkPrivate;
 
-    return {getGameboard, setMarkInherit}
+    return {getBoard, setMarkInherit}
 
 }) ();
 
  function createPlayer(name,mark) {
-    const {getGameboard, setMarkInherit} = gameboard;
+    const {getBoard, setMarkInherit} = gameboard;
 
     name = name;
     mark = mark;
@@ -31,8 +31,8 @@ const gameboard = ( () => {
         setMarkInherit()(mark,x,y);
     };
 
-    return { name, mark, getStatus, changeStatus, getGameboard, setMark};
+    return { name, mark, getStatus, changeStatus, getBoard, setMark};
  }
-
+ 
  const player1 = createPlayer("blue", 1);
- const player2 = createPlayer("red", 2)
+ const player2 = createPlayer("red", 2);
