@@ -63,8 +63,9 @@ const blue = createPlayer("Blue", 1);
 const red = createPlayer("Red", 2);
 
 function checkWin(playerName, playerMark) {
+
     const { getBoard, changeWinStatusInherit } = gameboard;
-    const { updateDisplay } = userInterface;
+    const { updateDisplay, colorWinIndex } = userInterface;
 
     const row1 = ((getBoard()[0][0] == getBoard()[0][1]) && (getBoard()[0][1] == getBoard()[0][2])) && (getBoard()[0][2] == playerMark);
     const row2 = ((getBoard()[1][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[1][2])) && (getBoard()[1][2] == playerMark);
@@ -82,11 +83,15 @@ function checkWin(playerName, playerMark) {
     }
 
     if ((row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2) == 1) {
-        updateDisplay(`${playerName} Won`)
+        const winIndex = getWinIndex(playerMark);
+        updateDisplay(`${playerName} Won`);
+        colorWinIndex(winIndex);
         changeWinStatus(playerName);
     }
     if ((row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2) == 2) {
-        updateDisplay(`${playerName} Won`)
+        const winIndex = getWinIndex(playerMark);
+        updateDisplay(`${playerName} Won`);
+        colorWinIndex(winIndex);
         changeWinStatus(playerName);
     }
 }
@@ -105,6 +110,27 @@ function checkDraw() {
     }
     if (!getWinStatus())
         updateDisplay("Game Draw Refresh")
+
+}
+
+function getWinIndex(playerMark) {
+
+    const { getBoard, changeWinStatusInherit } = gameboard;
+
+    let winIndex;
+
+    const row1 = ((getBoard()[0][0] == getBoard()[0][1]) && (getBoard()[0][1] == getBoard()[0][2])) && (getBoard()[0][2] == playerMark) ? winIndex = "0,0 0,1 0,2" : null;
+    const row2 = ((getBoard()[1][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[1][2])) && (getBoard()[1][2] == playerMark) ? winIndex = "1,0 1,1 1,2" : null;
+    const row3 = ((getBoard()[2][0] == getBoard()[2][1]) && (getBoard()[2][1] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "2,0 2,1 2,2" : null;
+
+    const col1 = ((getBoard()[0][0] == getBoard()[1][0]) && (getBoard()[1][0] == getBoard()[2][0])) && (getBoard()[2][0] == playerMark) ? winIndex = "0,0 1,0 2,0" : null;
+    const col2 = ((getBoard()[0][1] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][1])) && (getBoard()[2][1] == playerMark) ? winIndex = "0,1 1,1 2,1" : null;
+    const col3 = ((getBoard()[0][2] == getBoard()[1][2]) && (getBoard()[1][2] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,2 2,2 2,2" : null;
+
+    const diag1 = ((getBoard()[0][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,0 1,1 1,2" : null;
+    const diag2 = ((getBoard()[0][2] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][0])) && (getBoard()[2][0] == playerMark) ? winIndex = "0,2 1,1 2,0" : null;
+    
+    return winIndex;
 
 }
 
@@ -175,6 +201,16 @@ const userInterface = ((blue, red) => {
         }
     }
 
+    const colorWinIndex = (winIndex) => {
+        const winIndexArray = winIndex.split(" ");
+        const winSquare1 = document.querySelector(`div[data-cords = "${winIndexArray[0]}"]`);
+        const winSquare2 = document.querySelector(`div[data-cords = "${winIndexArray[1]}"]`);
+        const winSquare3 = document.querySelector(`div[data-cords = "${winIndexArray[2]}"]`);
+
+        winSquare1.style.backgroundColor = "#1deb1d67"
+        winSquare2.style.backgroundColor = "#1deb1d67"
+        winSquare3.style.backgroundColor = "#1deb1d67"
+    }
 
     const boxes = document.querySelectorAll('.box');
 
@@ -195,7 +231,7 @@ const userInterface = ((blue, red) => {
         })
     })
 
-    return { updateDisplay };
+    return {updateDisplay, colorWinIndex};
 
 })(blue, red);
 
