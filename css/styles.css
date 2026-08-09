@@ -47,3 +47,19 @@ main {
 .right {
     border-right: none;
 }
+
+.cross {
+    background-image: url(../images/cross.svg);
+    background-size: contain; 
+}
+
+.circle {
+    background-image: url(../images/circle.svg);
+    background-size: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.board {
+    border-radius: 12px;
+}

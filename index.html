@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 </head>
 <body>
     <header>
@@ -14,15 +14,15 @@
 
     <main>
         <div class="board">
-            <div class="box top left"></div>
-            <div class="box top"></div>
-            <div class="box top right"></div>
-            <div class="box left"></div>
-            <div class="box"></div>
-            <div class="box right"></div>
-            <div class="box bottom left"></div>
-            <div class="box bottom"></div>
-            <div class="box bottom right"></div>
+            <div class="box top left" data-cords = "0,0"></div>
+            <div class="box top" data-cords="0,1"></div>
+            <div class="box top right" data-cords="0,2"></div>
+            <div class="box left" data-cords="1,0"></div>
+            <div class="box" data-cords="1,1"></div>
+            <div class="box right" data-cords="1,2"></div>
+            <div class="box bottom left" data-cords="2,0"></div>
+            <div class="box bottom" data-cords="2,1"></div>
+            <div class="box bottom right" data-cords="2,2"></div>
         </div>
     </main>
 

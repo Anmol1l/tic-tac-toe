@@ -44,11 +44,11 @@ const createPlayer = (name, mark) => {
             console.log(`Game over ${winner} won`)
         }
 
-        else if (!getBoard()[x][y] && getLastMark() != mark && turns < 10) {
+        else if (!getBoard()[x][y] && getLastMark() != mark && turns < 8) {
             setMarkInherit()(mark, x, y);
             checkWin(name, mark);
             console.log(getBoard())
-            turns++;
+            ++turns;
         }
         else if (getBoard()[x][y] != 0) {
             console.log("Occupied")
@@ -56,7 +56,7 @@ const createPlayer = (name, mark) => {
         else if (getLastMark() == mark) {
             console.log("Not Your Turn")
         }
-        else if (turns >= 9) {
+        else {
             console.log("Draw refresh")
         }
     };
@@ -64,8 +64,8 @@ const createPlayer = (name, mark) => {
     return { name, mark, getBoard, setMark };
 }
 
-const player1 = createPlayer("blue", 1);
-const player2 = createPlayer("red", 2);
+const blue = createPlayer("blue", 1);
+const red = createPlayer("red", 2);
 
 function checkWin(playerName, playerMark) {
     const { getBoard, changeWinStatusInherit } = gameboard;
@@ -94,3 +94,57 @@ function checkWin(playerName, playerMark) {
         changeWinStatus(playerName);
     }
 }
+
+const userInterface = ((blue, red) => {
+
+    let turn = blue
+    const board = document.querySelector('.board')
+
+    const bgOnTurn = () => {
+        if (turn == blue) {
+            board.style.backgroundColor = '#366ef235';
+        }
+
+        if (turn == red) {
+            board.style.backgroundColor = '#f060603f';
+        }
+    }
+
+
+    const doTurn = (x, y) => {
+
+        if (turn == blue) {
+            blue.setMark(x, y)
+            turn = red
+            bgOnTurn()
+        }
+
+        else if (turn == red) {
+            red.setMark(x, y)
+            turn = blue
+            bgOnTurn()
+        }
+    }
+
+
+    const boxes = document.querySelectorAll('.box');
+
+    boxes.forEach(box => {
+        box.addEventListener('click', () => {
+            const cordsString = box.dataset.cords;
+            const cords = cordsString.split(",");
+
+            if (turn == blue && !(box.classList.contains('cross') || box.classList.contains('circle'))) {
+                box.classList.add('cross')
+                doTurn(cords[0], cords[1]);
+            }
+            else if (turn == red && !(box.classList.contains('cross') || box.classList.contains('circle'))) {
+                box.classList.add('circle')
+                doTurn(cords[0], cords[1]);
+            }
+
+        })
+    })
+
+})(blue, red);
+
