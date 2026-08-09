@@ -185,6 +185,14 @@ const userInterface = ((blue, red) => {
         }
     }
     bgOnTurn()
+    
+    let firstClick = true
+    hideCornerOnFirstClick = () => {
+        updateDisplay("Game Started")
+        blueSide.style.display = "none";
+        redSide.style.display = "none";
+        firstClick = false;
+    }
 
 
     const doTurn = (x, y) => {
@@ -215,17 +223,14 @@ const userInterface = ((blue, red) => {
 
     const boxes = document.querySelectorAll('.box');
 
-    let firstClick = false
+
     boxes.forEach(box => {
         box.addEventListener('click', () => {
             const cordsString = box.dataset.cords;
             const cords = cordsString.split(",");
-            firstClick = true;
 
             if (firstClick == true) {
-                updateDisplay("Game Started")
-                blueSide.style.display = "none";
-                redSide.style.display = "none";
+                hideCornerOnFirstClick();
             }
 
             if (turn == blue && !(box.classList.contains('cross') || box.classList.contains('circle'))) {
