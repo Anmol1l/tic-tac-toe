@@ -30,7 +30,6 @@ const gameboard = (() => {
 
 })();
 
-let turns = 0
 const createPlayer = (name, mark) => {
     const { getBoard, setMarkInherit, getLastMark, getWinStatus } = gameboard;
 
@@ -39,16 +38,12 @@ const createPlayer = (name, mark) => {
 
     const setMark = (x, y) => {
 
-        if (getWinStatus()) {
-            const winner = getWinStatus();
-            console.log(`Game over ${winner} won`)
-        }
 
-        else if (!getBoard()[x][y] && getLastMark() != mark && turns < 8) {
+        if (!getBoard()[x][y] && getLastMark() != mark) {
             setMarkInherit()(mark, x, y);
             checkWin(name, mark);
+            checkDraw()
             console.log(getBoard())
-            ++turns;
         }
         else if (getBoard()[x][y] != 0) {
             console.log("Occupied")
@@ -64,11 +59,12 @@ const createPlayer = (name, mark) => {
     return { name, mark, getBoard, setMark };
 }
 
-const blue = createPlayer("blue", 1);
-const red = createPlayer("red", 2);
+const blue = createPlayer("Blue", 1);
+const red = createPlayer("Red", 2);
 
 function checkWin(playerName, playerMark) {
     const { getBoard, changeWinStatusInherit } = gameboard;
+    const { updateDisplay } = userInterface;
 
     const row1 = ((getBoard()[0][0] == getBoard()[0][1]) && (getBoard()[0][1] == getBoard()[0][2])) && (getBoard()[0][2] == playerMark);
     const row2 = ((getBoard()[1][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[1][2])) && (getBoard()[1][2] == playerMark);
@@ -86,18 +82,39 @@ function checkWin(playerName, playerMark) {
     }
 
     if ((row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2) == 1) {
-        console.log(`${playerName} Won`)
+        updateDisplay(`${playerName} Won`)
         changeWinStatus(playerName);
     }
     if ((row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2) == 2) {
-        console.log(`${playerName} Won`)
+        updateDisplay(`${playerName} Won`)
         changeWinStatus(playerName);
     }
 }
 
+function checkDraw() {
+
+    const {updateDisplay} = userInterface;
+
+    const {getBoard} = gameboard; 
+
+    for (const row of getBoard()) {
+        for (const element of row) {
+            if (element === 0)
+                return false;
+        }
+    }
+    updateDisplay("Game Draw")
+
+}
+
 const userInterface = ((blue, red) => {
 
-    let turn = null
+    const updateDisplay = (message) => {
+        const display = document.querySelector('.display');
+        display.textContent = message;
+    }
+
+    let turn = blue;
     const board = document.querySelector('.board')
 
     const blueSide = document.querySelector('.blue-box')
@@ -106,6 +123,7 @@ const userInterface = ((blue, red) => {
     blueSide.addEventListener('click', () => {
         turn = blue;
         bgOnTurn();
+        updateDisplay("Game Started")
         blueSide.style.display = "none";
         redSide.style.display = "none";
     })
@@ -126,6 +144,7 @@ const userInterface = ((blue, red) => {
             board.style.backgroundColor = '#f060603f';
         }
     }
+    bgOnTurn()
 
 
     const doTurn = (x, y) => {
@@ -162,6 +181,8 @@ const userInterface = ((blue, red) => {
 
         })
     })
+
+    return { updateDisplay };
 
 })(blue, red);
 
