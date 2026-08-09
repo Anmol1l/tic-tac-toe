@@ -1,0 +1,49 @@
+* {
+    margin: 0px;
+}
+
+h1 {
+    background-color: #5e1f1f;
+    color: white;
+    padding: 50px 50px 20px 50px;
+    font-family: fantasy;
+    font-size: 3rem;
+}
+
+body {
+    background-color: peachpuff;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.board {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: repeat(3, minmax(70px,150px));
+    grid-template-rows: repeat(3, minmax(70px,150px));
+}
+
+.box {
+    border: 2px solid black;
+}
+
+.left {
+    border-left: none;
+}
+
+.top {
+    border-top: none;
+}
+
+.bottom {
+    border-bottom: none;
+}
+
+.right {
+    border-right: none;
+}
