@@ -125,7 +125,7 @@ function getWinIndex(playerMark) {
 
     const col1 = ((getBoard()[0][0] == getBoard()[1][0]) && (getBoard()[1][0] == getBoard()[2][0])) && (getBoard()[2][0] == playerMark) ? winIndex = "0,0 1,0 2,0" : null;
     const col2 = ((getBoard()[0][1] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][1])) && (getBoard()[2][1] == playerMark) ? winIndex = "0,1 1,1 2,1" : null;
-    const col3 = ((getBoard()[0][2] == getBoard()[1][2]) && (getBoard()[1][2] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,2 2,2 2,2" : null;
+    const col3 = ((getBoard()[0][2] == getBoard()[1][2]) && (getBoard()[1][2] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,2 1,2 2,2" : null;
 
     const diag1 = ((getBoard()[0][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,0 1,1 2,2" : null;
     const diag2 = ((getBoard()[0][2] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][0])) && (getBoard()[2][0] == playerMark) ? winIndex = "0,2 1,1 2,0" : null;
