@@ -39,11 +39,11 @@ const createPlayer = (name, mark) => {
     const setMark = (x, y) => {
 
 
-        if (!getBoard()[x][y] && getLastMark() != mark) {
+        if (!getBoard()[x][y] && getLastMark() != mark && !getWinStatus()) {
             setMarkInherit()(mark, x, y);
             checkWin(name, mark);
             checkDraw()
-            console.log(getBoard())
+            // console.log(getBoard())
         }
         else if (getBoard()[x][y] != 0) {
             console.log("Occupied")
@@ -52,7 +52,7 @@ const createPlayer = (name, mark) => {
             console.log("Not Your Turn")
         }
         else {
-            console.log("Draw refresh")
+            console.log("something went wrong")
         }
     };
 
@@ -93,9 +93,9 @@ function checkWin(playerName, playerMark) {
 
 function checkDraw() {
 
-    const {updateDisplay} = userInterface;
+    const { updateDisplay } = userInterface;
 
-    const {getBoard} = gameboard; 
+    const { getBoard, getWinStatus } = gameboard;
 
     for (const row of getBoard()) {
         for (const element of row) {
@@ -103,14 +103,27 @@ function checkDraw() {
                 return false;
         }
     }
-    updateDisplay("Game Draw")
+    if (!getWinStatus())
+        updateDisplay("Game Draw Refresh")
 
 }
 
 const userInterface = ((blue, red) => {
 
     const updateDisplay = (message) => {
+
         const display = document.querySelector('.display');
+
+        if (message == "Blue Won") {
+            display.style.color = "#366ef2"
+            display.style.fontWeight = "700"
+        }
+
+        if (message == "Red Won") {
+            display.style.color = "#f06060"
+            display.style.fontWeight = "700"
+        }
+
         display.textContent = message;
     }
 
