@@ -127,9 +127,9 @@ function getWinIndex(playerMark) {
     const col2 = ((getBoard()[0][1] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][1])) && (getBoard()[2][1] == playerMark) ? winIndex = "0,1 1,1 2,1" : null;
     const col3 = ((getBoard()[0][2] == getBoard()[1][2]) && (getBoard()[1][2] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,2 2,2 2,2" : null;
 
-    const diag1 = ((getBoard()[0][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,0 1,1 1,2" : null;
+    const diag1 = ((getBoard()[0][0] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][2])) && (getBoard()[2][2] == playerMark) ? winIndex = "0,0 1,1 2,2" : null;
     const diag2 = ((getBoard()[0][2] == getBoard()[1][1]) && (getBoard()[1][1] == getBoard()[2][0])) && (getBoard()[2][0] == playerMark) ? winIndex = "0,2 1,1 2,0" : null;
-    
+
     return winIndex;
 
 }
@@ -170,6 +170,7 @@ const userInterface = ((blue, red) => {
     redSide.addEventListener('click', () => {
         turn = red;
         bgOnTurn();
+        updateDisplay("Game Started")
         blueSide.style.display = "none";
         redSide.style.display = "none";
     })
@@ -214,10 +215,18 @@ const userInterface = ((blue, red) => {
 
     const boxes = document.querySelectorAll('.box');
 
+    let firstClick = false
     boxes.forEach(box => {
         box.addEventListener('click', () => {
             const cordsString = box.dataset.cords;
             const cords = cordsString.split(",");
+            firstClick = true;
+
+            if (firstClick == true) {
+                updateDisplay("Game Started")
+                blueSide.style.display = "none";
+                redSide.style.display = "none";
+            }
 
             if (turn == blue && !(box.classList.contains('cross') || box.classList.contains('circle'))) {
                 box.classList.add('cross')
@@ -227,11 +236,10 @@ const userInterface = ((blue, red) => {
                 box.classList.add('circle')
                 doTurn(cords[0], cords[1]);
             }
-
         })
     })
 
-    return {updateDisplay, colorWinIndex};
+    return { updateDisplay, colorWinIndex };
 
 })(blue, red);
 
