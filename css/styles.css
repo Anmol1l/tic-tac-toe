@@ -2,23 +2,40 @@
     margin: 0px;
 }
 
-h1 {
-    background-color: #5e1f1f;
-    color: white;
-    padding: 50px 50px 20px 50px;
-    font-family: fantasy;
-    font-size: 3rem;
-}
-
 body {
     background-color: peachpuff;
+    display: grid;
+    height: 100vh;
+    grid-template-rows: 150px 1fr;
 }
 
-main {
+header {
+    background-color: #5e1f1f;
+    box-sizing: border-box;
+    height: 100%;
+    font-family: fantasy;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+}
+
+h1 {
+    font-size: 3rem;
+    color: white;  
+}
+
+main {
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
+}
+
+.results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    grid-column: 1 / -1;
 }
 
 .board {
@@ -26,6 +43,7 @@ main {
     box-sizing: border-box;
     grid-template-columns: repeat(3, minmax(70px,150px));
     grid-template-rows: repeat(3, minmax(70px,150px));
+    place-self: center;
 }
 
 .box {
