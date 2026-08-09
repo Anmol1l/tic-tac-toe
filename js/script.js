@@ -97,8 +97,25 @@ function checkWin(playerName, playerMark) {
 
 const userInterface = ((blue, red) => {
 
-    let turn = blue
+    let turn = null
     const board = document.querySelector('.board')
+
+    const blueSide = document.querySelector('.blue-box')
+    const redSide = document.querySelector('.red-box')
+
+    blueSide.addEventListener('click', () => {
+        turn = blue;
+        bgOnTurn();
+        blueSide.style.display = "none";
+        redSide.style.display = "none";
+    })
+
+    redSide.addEventListener('click', () => {
+        turn = red;
+        bgOnTurn();
+        blueSide.style.display = "none";
+        redSide.style.display = "none";
+    })
 
     const bgOnTurn = () => {
         if (turn == blue) {
